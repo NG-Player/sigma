@@ -1138,6 +1138,18 @@
 /mob/living/can_be_pulled()
 	return ..() && !(buckled && buckled.buckle_prevents_pull)
 
+/mob/proc/get_top_level_mob()
+	if(istype(src.loc,/mob)&&src.loc!=src)
+		var/mob/M=src.loc
+		return M.get_top_level_mob()
+	return src
+
+proc/get_top_level_mob(var/mob/S)
+	if(istype(S.loc,/mob)&&S.loc!=S)
+		var/mob/M=S.loc
+		return M.get_top_level_mob()
+	return S
+	
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_mobility()
